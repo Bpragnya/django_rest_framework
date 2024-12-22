@@ -34,14 +34,14 @@ class Book(models.Model):
 
 
 class Bookshelf(models.Model):
-    id = models.IntegerField(primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(unique=True, max_length=64)
 
     class Meta:
         db_table = 'books_bookshelf'
 
 class Language(models.Model):
-    id = models.IntegerField(primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True, editable=False)
     code = models.CharField(unique=True, max_length=4)
 
     class Meta:
@@ -49,7 +49,7 @@ class Language(models.Model):
 
 
 class Subject(models.Model):
-    id = models.IntegerField(primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(max_length=256)
 
     class Meta:
