@@ -7,7 +7,7 @@ from .serializers import*
 # Create your views here.
 
 class BookAuthorsView(viewsets.ModelViewSet):
-    queryset = BookAuthors.objects.all()
+    queryset = BookAuthors.objects.all().order_by('id')
     serializer_class = BookAuthorsSerializer
 
     def list(self, request, *args, **kwargs):

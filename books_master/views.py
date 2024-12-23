@@ -55,7 +55,7 @@ from status_code.status_codes import CustomStatusCodes
 #             return Response({"message": "User data Not found", "status": status_code})
 
 class BookView(viewsets.ModelViewSet):
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().order_by('id')
     # queryset = Book.objects.all().order_by('-id')[:20]
     serializer_class = BookSerializer
     # pagination_class = CustomPagination or set globally in settings.py
