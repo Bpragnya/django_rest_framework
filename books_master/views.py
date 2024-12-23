@@ -4,6 +4,8 @@ from rest_framework import viewsets
 from .models import *
 from .serializers import*
 from status_code.status_codes import CustomStatusCodes
+# from djangoproject.pagination import CustomPagination
+# from rest_framework.pagination import PageNumberPagination
 
 # Create your views here.
 
@@ -54,11 +56,13 @@ from status_code.status_codes import CustomStatusCodes
 
 class BookView(viewsets.ModelViewSet):
     queryset = Book.objects.all()
+    # queryset = Book.objects.all().order_by('-id')[:20]
     serializer_class = BookSerializer
-
-    def list(self, request, *args, **kwargs):
-        data = list(Book.objects.all().values())
-        return Response(data)
+    # pagination_class = CustomPagination or set globally in settings.py
+    # pagination_class = PageNumberPagination
+    # pagination_class.page_size = 2
+    # pagination_class.page_size_query_param = 'page_size'
+    # pagination_class.max_page_size = 10
     
     def create(self, request, *args, **kwargs):
         try:
@@ -82,10 +86,19 @@ class BookView(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             queryset = self.get_queryset()
-            serializer = self.get_serializer(queryset, many=True)
+            # serializer = self.get_serializer(queryset, many=True)
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                result = self.get_paginated_response(serializer.data)
+                data = result.data # pagination data
+            else:
+                serializer = self.get_serializer(queryset, many=True)
+                data = serializer.data
+           
 
             return Response({
-                "data": serializer.data,
+                "data": data,
                 "message": "Book details retrieved successfully",
                 "statuscode": CustomStatusCodes.SUCCESS
             }, status=CustomStatusCodes.SUCCESS)

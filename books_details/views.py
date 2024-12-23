@@ -36,10 +36,18 @@ class BookAuthorsView(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             queryset = self.get_queryset()
-            serializer = self.get_serializer(queryset, many=True)
+            # serializer = self.get_serializer(queryset, many=True)
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                result = self.get_paginated_response(serializer.data)
+                data = result.data # pagination data
+            else:
+                serializer = self.get_serializer(queryset, many=True)
+                data = serializer.data
 
             return Response({
-                "data": serializer.data,
+                "data": data,
                 "message": "Book Author details retrieved successfully",
                 "statuscode": status.HTTP_200_OK
             }, status=status.HTTP_200_OK)

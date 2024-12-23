@@ -1,0 +1,18 @@
+[
+    {
+      "model": "books_master.Author",
+      "fields": {
+        "birth_year": 1743 ,
+        "death_year": 1826,
+        "name": "Jefferson, Thomas"
+      }
+    },
+    {
+        "model": "books_master.Author",
+        "fields": {
+          "birth_year": 1917 ,
+          "death_year": 1963,
+          "name": "United States"
+        }
+    }
+  ]
