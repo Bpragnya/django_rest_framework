@@ -10,7 +10,7 @@ from .models import Author,Book,Bookshelf,Language,Subject
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
-        fields = '__all__'
+        fields = ['name','birth_year','death_year']
         read_only_fields = ['id']
 
 
@@ -24,14 +24,14 @@ class BookSerializer(serializers.ModelSerializer):
 class BookshelfSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bookshelf
-        fields = '__all__'
+        fields = ['name']
 
 class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
-        fields = '__all__'
+        fields = ['code']
 
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fields = '__all__'
+        fields = ['name']
